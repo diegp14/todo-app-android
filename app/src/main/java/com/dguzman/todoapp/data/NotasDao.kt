@@ -16,12 +16,12 @@ interface NotasDao {
     fun getAllNotas(): Flow<List<Nota>>
 
     @Query("SELECT * FROM notas WHERE id = :id")
-    suspend fun getNotaById(id: Int): Nota?
+    suspend fun getNotaById(id: Int): Nota
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNota(nota: Nota)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateNota(nota: Nota)
 
     @Delete

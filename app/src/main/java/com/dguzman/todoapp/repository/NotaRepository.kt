@@ -19,4 +19,6 @@ class NotaRepository @Inject constructor(
     suspend fun updateNota(nota: Nota) = dao.updateNota(nota)
 
     suspend fun deleteNota(nota: Nota) = dao.deleteNota(nota)
+
+    suspend fun getNotaById(id: Int): Nota = dao.getNotaById(id)
 }
