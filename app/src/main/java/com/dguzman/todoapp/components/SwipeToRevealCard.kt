@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -70,13 +71,13 @@ fun SwipeToRevealCard(
             layout(0, 0) {}
         }
 
-        Box(modifier = modifier) {
+        Box(modifier = modifier.clip(RoundedCornerShape(16.dp))) {
             // FONDO CON BOTONES
             Row(
                 modifier = Modifier
                     .matchParentSize()
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(Color.LightGray),
+                   // .clip(shape = RoundedCornerShape(15.dp))
+                    .background(Color.DarkGray),
                 horizontalArrangement = Arrangement.End
             ) {
                 actionButtons.forEach { actionButton ->
@@ -85,7 +86,7 @@ fun SwipeToRevealCard(
                 }
             }
             // CARD DESLIZABLE
-            Box(
+            Card(
                 modifier = Modifier
                     .offset { IntOffset(swipeOffset.value.roundToInt(), 0) }
                     .pointerInput(actionButtons.size) {

@@ -11,13 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,9 +24,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.dguzman.todoapp.components.ActionIcon
+import com.dguzman.todoapp.components.AlertDialogCustom
 import com.dguzman.todoapp.components.CardNota
 import com.dguzman.todoapp.components.NotaButton
 import com.dguzman.todoapp.components.NotaInputText
@@ -50,6 +47,7 @@ fun NotasScreen(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var isShowing by remember { mutableStateOf(false) }
 
     val focusRequester = remember { FocusRequester() }
     val focusRequester2 = remember { FocusRequester() }
@@ -117,7 +115,8 @@ fun NotasScreen(
                                     tint = Color.White,
                                     size = 60.dp,
                                     onClick = {
-                                        onRemoveNota(nota)
+                                        //Implementar AlertDialog
+                                        isShowing = true
                                     }
                                 )
                             },
@@ -129,6 +128,19 @@ fun NotasScreen(
                         onClickNota = { onClickNota(it) }
                     )
                     }
+                    if (isShowing){
+                        AlertDialogCustom(
+                            dialogText =  "¿Estás seguro de que deseas eliminar esta nota?",
+                            dialogTitle = "Eliminar nota",
+                            onDismissRequest = { isShowing = false },
+                            onConfirmation = {
+                                onRemoveNota(nota)
+                                isShowing = false
+                            },
+                            icon = Icons.Default.Warning,
+                            onCancel = { isShowing = false },
+                        )
+                    }
                     /*CardNota(
                     nota = nota,
                         onRemoveNota = {onRemoveNota(it)},
@@ -138,6 +150,7 @@ fun NotasScreen(
                      */
                 }
             }
+
         }
     }
 
